@@ -61,7 +61,7 @@
       document.getElementById('title').textContent   = 'Invalid Link';
       document.getElementById('message').textContent = 'No verification token found.';
     } else {
-      fetch('http://localhost:8081/api/auth/verify?token=' + token)
+      fetch('https://stars-backend-1.onrender.com/api/auth/verify?token=' + token)
         .then(r => r.json())
         .then(data => {
           if (data.success) {
