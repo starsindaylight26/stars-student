@@ -34,24 +34,28 @@ if (loginForm) {
     try {
       const data = await api.login(email, password);
 
-      if (data.success) {
-        localStorage.setItem('stars_token', data.token);
-        localStorage.setItem('stars_user', JSON.stringify(data.user));
-        window.location.href = 'dashboard.html';
-      } else {
-        if (data.message === 'Cannot connect to server.') {
-          errorEl.innerHTML =
-            '&#9888;&#65039; Cannot connect to server.<br>' +
-            '<small style="color:var(--gray);line-height:1.8">' +
-            'Make sure your backend is running on <strong>port 8081</strong>.<br>' +
-            'Make sure your <strong>Spring Boot backend</strong> is running in NetBeans.' +
-            '</small>';
-        } else {
-          errorEl.textContent = data.message || 'Invalid credentials.';
-        }
-        btn.disabled = false;
-        btn.textContent = 'Sign In →';
-      }
+    if (data.requiresVerification) {
+  errorEl.textContent = data.message;
+  btn.disabled = false;
+  btn.textContent = 'Sign In →';
+  return;
+}
+if (data.success) {
+  localStorage.setItem('stars_token', data.token);
+  localStorage.setItem('stars_user', JSON.stringify({
+    full_name: data.fullName,
+    student_id: data.studentId,
+    email: data.email,
+    program: data.program,
+    block: data.block,
+    year_level: data.yearLevel
+  }));
+  window.location.href = 'dashboard.html';
+} else {
+  errorEl.textContent = data.message || 'Invalid credentials.';
+  btn.disabled = false;
+  btn.textContent = 'Sign In →';
+}
     } catch (err) {
       errorEl.textContent = 'Connection error. Please try again.';
       btn.disabled = false;
@@ -59,7 +63,6 @@ if (loginForm) {
     }
   });
 }
-
 // ---- APP PAGES: Protect + Load User Info ----
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
