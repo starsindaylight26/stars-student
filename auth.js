@@ -43,13 +43,13 @@ if (loginForm) {
 if (data.success) {
   localStorage.setItem('stars_token', data.token);
   localStorage.setItem('stars_user', JSON.stringify({
-    full_name: data.fullName,
-    student_id: data.studentId,
-    email: data.email,
-    program: data.program,
-    block: data.block,
-    year_level: data.yearLevel
-  }));
+  full_name: data.user.full_name,
+  student_id: data.user.student_id,
+  email: data.user.email,
+  program: data.user.program,
+  block: data.user.block,
+  year_level: data.user.year_level
+}));
   window.location.href = 'dashboard.html';
 } else {
   errorEl.textContent = data.message || 'Invalid credentials.';
