@@ -651,7 +651,7 @@
 
       const result = await api.register(fullName, studentId, email, program, block, yearLevel, password);
       if (result.success) {
-        successEl.textContent = '✓ Account created! You can now sign in.';
+        successEl.textContent = '✓ Account created! Please wait for your Program Chair to approve your account.';
         document.getElementById('registerForm').reset();
         document.getElementById('regEmail').value = '';
         setTimeout(() => {
