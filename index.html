@@ -66,12 +66,12 @@
     }
 
     /* ── MAIN CARD (Image 1 style) ── */
-    .login-card {
+   .login-card {
   position: relative; z-index: 10;
   display: flex;
   width: min(980px, calc(100vw - 48px));
   min-height: 530px;
-  max-height: calc(100vh - 48px);  /* ← DAGDAG ITO */
+  max-height: calc(100vh - 48px);
   border-radius: 20px; overflow: hidden;
   background: rgba(10,16,60,0.88);
   border: 1px solid rgba(255,255,255,0.08);
@@ -170,12 +170,14 @@
     }
 
     /* ── RIGHT PANEL ── */
-    .form-panel {
-      flex: 1;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 44px 48px 88px;
-      position: relative;
-    }
+   .form-panel {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 44px 48px 88px;
+  position: relative;
+  overflow-y: auto;
+  max-height: 100vh;
+}
 
     /* STARS title */
     .stars-title {
