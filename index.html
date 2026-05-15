@@ -486,7 +486,7 @@
             <input type="checkbox" id="rememberMe" style="width:14px;height:14px;padding:0;" />
             <span>Remember me</span>
           </label>
-          <a href="#" class="forgot-link">Forgot password?</a>
+          <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Forgot password?</a>
         </div>
 
         <div class="form-error" id="loginError"></div>
@@ -666,6 +666,37 @@
       btn.disabled = false;
       btn.childNodes[0].textContent = 'Create Account';
     });
+
+    function showForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const result = prompt('Enter your Gordon College email to reset your password:', email || '');
+  if (!result) return;
+  
+  const errEl = document.getElementById('loginError');
+  errEl.style.color = '#4ade80';
+  errEl.textContent = 'Sending reset link...';
+  
+  fetch('https://stars-backend-1.onrender.com/api/auth/forgot-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: result })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      errEl.textContent = '✓ Reset link sent! Check your email.';
+    } else {
+      errEl.style.color = '#f87171';
+      errEl.textContent = data.message || 'Email not found.';
+    }
+  })
+  .catch(() => {
+    errEl.style.color = '#f87171';
+    errEl.textContent = 'Connection error. Try again.';
+  });
+}
+    
   </script>
 </body>
 </html>
